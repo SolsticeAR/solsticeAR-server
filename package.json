@@ -1,0 +1,17 @@
+{
+  "name": "solstice-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Solstice Team",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-datasource": "^0.6.3",
+    "apollo-server": "^2.9.3",
+    "graphql": "^14.5.4",
+    "pg": "^7.12.1",
+    "sequelize": "^5.18.1"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^5.5.1"
+  }
+}
