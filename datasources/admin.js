@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { AuthenticationError, UserInputError, ForbiddenError } = require("apollo-server");
 
-
+const SECRET_KEY = "temp_secret";
 
 class AdminAPI extends DataSource {
   constructor() {
@@ -57,7 +57,7 @@ class AdminAPI extends DataSource {
       {
         email: admin.email,
       },
-      "temp_secret", //TODO: switch to something more safe
+      SECRET_KEY, //TODO: switch to something more safe
       {
         expiresIn: "30d", //token will expire in 30 days
       }
@@ -67,6 +67,11 @@ class AdminAPI extends DataSource {
       token,
       data: admin
     };
+  }
+  /* This is how you authenticate a request */
+  test() {
+      if(!this.context)
+        throw new AuthenticationError("Login information does not match our records");
   }
 }
 

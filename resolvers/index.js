@@ -26,6 +26,9 @@ const resolvers = {
         token,
         admin: new Admin(data)
       };
+    },
+    test: (_, {campaignID}, {dataSources}) => {
+      dataSources.adminAPI.test();
     }
   }
 };

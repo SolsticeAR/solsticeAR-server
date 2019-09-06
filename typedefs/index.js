@@ -26,6 +26,7 @@ const typeDefs = gql(`
     type Mutation {
       register(adminData: NewAdminInput): Admin
       login(email: String, password: String): LoginResponse
+      test(campaignID: Int): Int
     }
 `);
 
