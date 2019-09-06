@@ -1,5 +1,8 @@
 const { DataSource } = require('apollo-datasource');
 const db = require('../models')
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { AuthenticationError, UserInputError, ForbiddenError } = require("apollo-server");
 
 
 
@@ -25,11 +28,46 @@ class AdminAPI extends DataSource {
     let admin = await db["admin"].findOne({
         where: { email }
     });
-
     return admin;
   }
+  async createAdmin({name, password, email, industry = null}) {
+    const hashedPassword = await bcrypt.hash(password,8);
+    try {
+      const admin = await db["admin"].create({
+      name,
+      email,
+      industry,
+      password: hashedPassword
+    });
+    return admin;
+    } catch(err) {
+      throw new UserInputError("User input error. Please make sure your data is setup properly.")
+    }
+  }
 
- 
+  async login(email, password) {
+    const admin = await this.findAdminByEmail(email);
+    const passwordMatch = await bcrypt.compare(password, admin.password);
+
+    if(!passwordMatch) {
+      throw new AuthenticationError("Login info does not match our records.");
+    }
+
+    const token = jwt.sign(
+      {
+        email: admin.email,
+      },
+      "temp_secret", //TODO: switch to something more safe
+      {
+        expiresIn: "30d", //token will expire in 30 days
+      }
+    );
+
+    return {
+      token,
+      data: admin
+    };
+  }
 }
 
 module.exports = AdminAPI;

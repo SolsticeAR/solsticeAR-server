@@ -7,11 +7,14 @@
   "dependencies": {
     "apollo-datasource": "^0.6.3",
     "apollo-server": "^2.9.3",
+    "bcryptjs": "^2.4.3",
     "graphql": "^14.5.4",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^7.12.1",
     "sequelize": "^5.18.1"
   },
   "devDependencies": {
+    "nodemon": "^1.19.2",
     "sequelize-cli": "^5.5.1"
   }
 }
