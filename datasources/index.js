@@ -1,3 +1,3 @@
 const AdminAPI = require("./admin");
 
-module.exports = {AdminAPI};
+module.exports = { AdminAPI };

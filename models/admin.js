@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     industry: DataTypes.STRING,
   }, {});
-  admin.associate = function(models) {
+  admin.associate = function (models) {
     // associations can be defined here
   };
   return admin;

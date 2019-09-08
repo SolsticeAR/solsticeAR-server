@@ -26,21 +26,21 @@ class AdminAPI extends DataSource {
    */
   async findAdminByEmail(email = "") {
     let admin = await db["admin"].findOne({
-        where: { email }
+      where: { email }
     });
     return admin;
   }
-  async createAdmin({name, password, email, industry = null}) {
-    const hashedPassword = await bcrypt.hash(password,8);
+  async createAdmin({ name, password, email, industry = null }) {
+    const hashedPassword = await bcrypt.hash(password, 8);
     try {
       const admin = await db["admin"].create({
-      name,
-      email,
-      industry,
-      password: hashedPassword
-    });
-    return admin;
-    } catch(err) {
+        name,
+        email,
+        industry,
+        password: hashedPassword
+      });
+      return admin;
+    } catch (err) {
       throw new UserInputError("User input error. Please make sure your data is setup properly.")
     }
   }
@@ -49,7 +49,7 @@ class AdminAPI extends DataSource {
     const admin = await this.findAdminByEmail(email);
     const passwordMatch = await bcrypt.compare(password, admin.password);
 
-    if(!passwordMatch) {
+    if (!passwordMatch) {
       throw new AuthenticationError("Login info does not match our records.");
     }
 
@@ -70,8 +70,8 @@ class AdminAPI extends DataSource {
   }
   /* This is how you authenticate a request */
   test() {
-      if(!this.context)
-        throw new AuthenticationError("Login information does not match our records");
+    if (!this.context)
+      throw new AuthenticationError("Login information does not match our records");
   }
 }
 

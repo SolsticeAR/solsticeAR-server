@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     url_campaign: DataTypes.STRING,
     active: DataTypes.BOOLEAN
   }, {});
-  campaign.associate = function(models) {
+  campaign.associate = function (models) {
     // associations can be defined here
   };
   return campaign;

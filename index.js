@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 /**
   * Static jwt authentication function
 */
-const context =  ({ req }) => {
+const context = ({ req }) => {
   const token = req.headers.authorization || "";
   const splitToken = token.split(" ")[1];
   const jwtVerify = jwt.verify(splitToken, "temp_secret");
@@ -25,6 +25,6 @@ const server = new ApolloServer({
   context
 });
 
-server.listen().then(async ({url}) => {
+server.listen().then(async ({ url }) => {
   console.log(`Server is listening at ${url}`);
 });

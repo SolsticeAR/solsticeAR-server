@@ -13,13 +13,13 @@ module.exports = {
       }], {});
     */
     return queryInterface.bulkInsert('admins', [{
-        name: 'John',
-        password: 'password',
-        email: 'demo@demo.com',
-        industry: "IT",
-        createdAt: new Date(),
-        updatedAt: new Date()
-      }], {});
+      name: 'John',
+      password: 'password',
+      email: 'demo@demo.com',
+      industry: "IT",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }], {});
   },
 
   down: (queryInterface, Sequelize) => {
@@ -30,6 +30,6 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('People', null, {});
     */
-     return queryInterface.bulkDelete('admins', null, {});
+    return queryInterface.bulkDelete('admins', null, {});
   }
 };
