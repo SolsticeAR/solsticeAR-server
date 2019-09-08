@@ -104,7 +104,3 @@ mutation {
 }
 ```
 
-## Author
-
-  - Wil Andrade
-
