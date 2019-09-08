@@ -1,8 +1,12 @@
-const { DataSource } = require('apollo-datasource');
-const db = require('../models')
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { AuthenticationError, UserInputError, ForbiddenError } = require("apollo-server");
+const { DataSource } = require("apollo-datasource");
+const db = require("../models");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const {
+  AuthenticationError,
+  UserInputError,
+  ForbiddenError
+} = require("apollo-server");
 
 const SECRET_KEY = "temp_secret";
 
@@ -41,7 +45,9 @@ class AdminAPI extends DataSource {
       });
       return admin;
     } catch (err) {
-      throw new UserInputError("User input error. Please make sure your data is setup properly.")
+      throw new UserInputError(
+        "User input error. Please make sure your data is setup properly."
+      );
     }
   }
 
@@ -55,11 +61,11 @@ class AdminAPI extends DataSource {
 
     const token = jwt.sign(
       {
-        email: admin.email,
+        email: admin.email
       },
       SECRET_KEY, //TODO: switch to something more safe
       {
-        expiresIn: "30d", //token will expire in 30 days
+        expiresIn: "30d" //token will expire in 30 days
       }
     );
 
@@ -71,7 +77,9 @@ class AdminAPI extends DataSource {
   /* This is how you authenticate a request */
   test() {
     if (!this.context)
-      throw new AuthenticationError("Login information does not match our records");
+      throw new AuthenticationError(
+        "Login information does not match our records"
+      );
   }
 }
 

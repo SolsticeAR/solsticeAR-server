@@ -1,4 +1,3 @@
-
 //Helper class to serialize data.
 class Admin {
   constructor(data) {
@@ -11,9 +10,9 @@ class Admin {
 const resolvers = {
   Query: {
     getAdmin: async (_, { email }, { dataSources }) => {
-      const data = await dataSources.adminAPI.findAdminByEmail(email)
+      const data = await dataSources.adminAPI.findAdminByEmail(email);
       return data ? new Admin(data) : null;
-    },
+    }
   },
   Mutation: {
     register: async (_, { adminData }, { dataSources }) => {
@@ -32,6 +31,5 @@ const resolvers = {
     }
   }
 };
-
 
 module.exports = resolvers;
