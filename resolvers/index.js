@@ -1,6 +1,7 @@
 //Helper class to serialize data.
 class Admin {
   constructor(data) {
+    this.id = data.id;
     this.name = data.name;
     this.email = data.email;
     this.industry = data.industry;

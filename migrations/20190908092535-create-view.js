@@ -1,27 +1,23 @@
 "use strict";
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("campaigns", {
+    return queryInterface.createTable("views", {
       id: {
-        primaryKey: true,
         allowNull: false,
         autoIncrement: true,
+        primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      admin_id: {
+      creative_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "admins",
+          model: "creatives",
           key: "id"
         }
       },
-      active: {
-        type: Sequelize.BOOLEAN,
+      view_count: {
+        type: Sequelize.INTEGER,
         allowNull: false
       },
       createdAt: {
@@ -35,6 +31,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("campaigns");
+    return queryInterface.dropTable("views");
   }
 };

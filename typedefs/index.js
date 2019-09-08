@@ -2,6 +2,7 @@ const { gql } = require("apollo-server");
 
 const typeDefs = gql(`
     type Admin {
+      id: Int
       name: String
       email: String
       industry: String

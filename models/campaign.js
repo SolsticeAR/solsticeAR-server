@@ -3,9 +3,11 @@ module.exports = (sequelize, DataTypes) => {
   const campaign = sequelize.define(
     "campaign",
     {
-      admin_id: DataTypes.STRING,
-      url_campaign: DataTypes.STRING,
-      active: DataTypes.BOOLEAN
+      name: DataTypes.STRING,
+      admin_id: DataTypes.INTEGER,
+      active: DataTypes.BOOLEAN,
+      createdAt: DataTypes.DATE,
+      updatedAt: DataTypes.DATE
     },
     {}
   );
