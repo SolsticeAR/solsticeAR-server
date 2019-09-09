@@ -24,6 +24,13 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         allowNull: false
       },
+      active_creative_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "creatives",
+          key: "id"
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
