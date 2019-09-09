@@ -17,9 +17,11 @@ const resolvers = {
       return data ? new Admin(data) : null;
     },
     getAdminCampaigns: async (_, { adminID }, { dataSources }) => {
-      const campaigns = await dataSources.campaignAPI.getAdminCampaigns(adminID);
+      const campaigns = await dataSources.campaignAPI.getAdminCampaigns(
+        adminID
+      );
       console.log(campaigns);
-      return mockCampaignData;
+      return campaigns;
     }
   },
   Mutation: {
