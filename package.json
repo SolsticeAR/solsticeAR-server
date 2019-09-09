@@ -4,6 +4,13 @@
   "main": "index.js",
   "author": "Solstice Team",
   "license": "MIT",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "migrate": "sequelize-cli db:migrate",
+    "migrate:undo": "sequelize-cli db:migrate:undo:all",
+    "seed": "sequelize-cli db:seed:all",
+    "seed:undo": "sequelize-cli db:seed:undo:all"
+  },
   "dependencies": {
     "apollo-datasource": "^0.6.3",
     "apollo-server": "^2.9.3",
