@@ -1,3 +1,4 @@
 const AdminAPI = require("./admin");
+const CampaignAPI = require("./campaign");
 
-module.exports = { AdminAPI };
+module.exports = { AdminAPI, CampaignAPI };

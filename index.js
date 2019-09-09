@@ -1,5 +1,5 @@
 const { ApolloServer, AuthenticationError } = require("apollo-server");
-const { AdminAPI } = require("./datasources");
+const { AdminAPI, CampaignAPI } = require("./datasources");
 const resolvers = require("./resolvers");
 const typeDefs = require("./typedefs");
 const jwt = require("jsonwebtoken");
@@ -20,7 +20,8 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   dataSources: () => ({
-    adminAPI: new AdminAPI()
+    adminAPI: new AdminAPI(),
+    campaignAPI: new CampaignAPI()
   }),
   context
 });
