@@ -2,11 +2,7 @@ const { DataSource } = require("apollo-datasource");
 const db = require("../models");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const {
-  AuthenticationError,
-  UserInputError,
-  ForbiddenError
-} = require("apollo-server");
+const { AuthenticationError, UserInputError } = require("apollo-server");
 
 const SECRET_KEY = "temp_secret";
 
