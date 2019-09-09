@@ -8,6 +8,25 @@ const typeDefs = gql(`
       industry: String
     }
 
+    type Campaign {
+      id: Int
+      name: String
+      media: [Media]
+    }
+
+    type Media {
+      id: Int
+      type: String
+      name: String
+      url: String
+      views: [View]
+    }
+
+    type View {
+      date: Float
+      views: Int
+    }
+
     input NewAdminInput {
       name: String!
       email: String!
@@ -17,6 +36,7 @@ const typeDefs = gql(`
     }
     type Query {
       getAdmin(email: String!): Admin
+      getAdminCampaigns(adminID: Int): [Campaign]
     }
 
     type LoginResponse {

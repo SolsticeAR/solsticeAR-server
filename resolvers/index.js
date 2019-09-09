@@ -1,3 +1,5 @@
+const mockCampaignData = require("../mocks/campaignData.js");
+
 //Helper class to serialize data.
 class Admin {
   constructor(data) {
@@ -13,6 +15,9 @@ const resolvers = {
     getAdmin: async (_, { email }, { dataSources }) => {
       const data = await dataSources.adminAPI.findAdminByEmail(email);
       return data ? new Admin(data) : null;
+    },
+    getAdminCampaigns: async (_, { adminID }, { dataSources }) => {
+      return mockCampaignData;
     }
   },
   Mutation: {
