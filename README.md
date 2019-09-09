@@ -29,7 +29,7 @@ In terminal:
 
 ```
 psql
-create table solstice;
+create database solstice;
 ```
 
 ### Development
