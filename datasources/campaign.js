@@ -11,6 +11,13 @@ class CampaignAPI extends DataSource {
     this.context = config.context;
   }
 
+  async getMediaById(id) {
+    let media = await db["creative"].findOne({
+      where: { id }
+    });
+    return media;
+  }
+
   async getCampaignById(id) {
     let campaign = await db["campaign"].findOne({
       where: { id }
@@ -80,7 +87,7 @@ class CampaignAPI extends DataSource {
     console.log("ACTIVE MEDIA ID: ", activeMediaId);
     if (!activeMediaId) {
       console.log("ACTIVE MEDIA NOT FOUND");
-      return false;
+      return -1;
     }
 
     const today = new Date();
@@ -101,7 +108,7 @@ class CampaignAPI extends DataSource {
         creative_id: activeMediaId
       });
     }
-    return true;
+    return activeMediaId;
   }
 
   async getAdminCampaigns(adminId) {

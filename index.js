@@ -37,13 +37,30 @@ app.set("views", __dirname + "/views");
 
 server.applyMiddleware({ app, path: "/api" });
 
+const renderError = (res, msg) => {
+  res.render("error.html", { msg });
+};
+
 app.get("/campaign/:campaignID", async (req, res) => {
-  const didSucceed = await campaignAPI.createOrIncrementViews(
+  const activeMediaId = await campaignAPI.createOrIncrementViews(
     req.params.campaignID
   );
-
-  const url = "https://i.imgur.com/B9mtGQ9.png";
-  res.render("image.html", { imageUrl: url });
+  if (activeMediaId === -1) {
+    const msg = "This campaign is not setup yet. Please come back soon";
+    renderError(res, msg);
+  } else {
+    const media = await campaignAPI.getMediaById(activeMediaId);
+    switch (media.type) {
+      case "image":
+        console.log(
+          "Attempting to render image template, with img url: " + media.url
+        );
+        res.render("image.html", { imageUrl: media.url });
+        break;
+      default:
+        renderError(res, "Media type is not handled yet: ", media.type);
+    }
+  }
 });
 
 const port = process.env.PORT || 4000;
