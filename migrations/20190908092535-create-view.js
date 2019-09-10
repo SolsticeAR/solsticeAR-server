@@ -16,6 +16,10 @@ module.exports = {
           key: "id"
         }
       },
+      view_date: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       view_count: {
         type: Sequelize.INTEGER,
         allowNull: false

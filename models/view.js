@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     "view",
     {
       creative_id: DataTypes.INTEGER,
-      view_count: DataTypes.INTEGER
+      view_count: DataTypes.INTEGER,
+      view_date: DataTypes.INTEGER
     },
     {}
   );

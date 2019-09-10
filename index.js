@@ -37,7 +37,11 @@ app.set("views", __dirname + "/views");
 
 server.applyMiddleware({ app, path: "/api" });
 
-app.get("/campaign/:campaignID", (req, res) => {
+app.get("/campaign/:campaignID", async (req, res) => {
+  const didSucceed = await campaignAPI.createOrIncrementViews(
+    req.params.campaignID
+  );
+
   const url = "https://i.imgur.com/B9mtGQ9.png";
   res.render("image.html", { imageUrl: url });
 });

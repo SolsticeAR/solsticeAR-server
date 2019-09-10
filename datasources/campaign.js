@@ -10,6 +10,14 @@ class CampaignAPI extends DataSource {
   initialize(config) {
     this.context = config.context;
   }
+
+  async getCampaignById(id) {
+    let campaign = await db["campaign"].findOne({
+      where: { id }
+    });
+    return campaign;
+  }
+
   async addCampaign(name, adminId) {
     if (name && name.trim() === "")
       throw new UserInputError("Name was not supplied.");
@@ -64,6 +72,36 @@ class CampaignAPI extends DataSource {
       url: insert.url,
       views: []
     };
+  }
+
+  async createOrIncrementViews(campaignId) {
+    const campaign = await this.getCampaignById(campaignId);
+    const activeMediaId = campaign.active_creative_id;
+    console.log("ACTIVE MEDIA ID: ", activeMediaId);
+    if (!activeMediaId) {
+      console.log("ACTIVE MEDIA NOT FOUND");
+      return false;
+    }
+
+    const today = new Date();
+    const view_date = `${today.getFullYear()}${today.getMonth()}${today.getDate()}`;
+    let view = await db["view"].increment("view_count", {
+      where: {
+        creative_id: activeMediaId,
+        view_date
+      }
+    });
+    console.log(view[0][0][0]);
+    if (view && view[0] && view[0][0] && view[0][0][0])
+      console.log("View count increased on :", view[0][0][0]);
+    else {
+      const insert = await db["view"].create({
+        view_count: 1,
+        view_date: view_date,
+        creative_id: activeMediaId
+      });
+    }
+    return true;
   }
 
   async getAdminCampaigns(adminId) {
