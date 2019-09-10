@@ -17,10 +17,10 @@ const typeDefs = gql(`
     }
 
     type Media {
-      id: Int
-      type: String
-      name: String
-      url: String
+      id: Int!
+      type: String!
+      name: String!
+      url: String!
       views: [View]
     }
 

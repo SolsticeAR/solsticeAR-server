@@ -48,13 +48,7 @@ const resolvers = {
     },
     addMedia: (_, { media }, { dataSources }) => {
       const newMedia = dataSources.campaignAPI.addMedia(media);
-      return {
-        id: 1,
-        name: media.name,
-        type: media.type,
-        url: media.url,
-        views: []
-      };
+      return newMedia;
     }
   }
 };
