@@ -55,7 +55,6 @@ const resolvers = {
         campaignID,
         mediaID
       );
-
       return result;
     }
   }
