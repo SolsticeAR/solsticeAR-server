@@ -38,6 +38,23 @@ const resolvers = {
     },
     test: (_, { campaignID }, { dataSources }) => {
       dataSources.adminAPI.test();
+    },
+    addCampaign: (_, { campaign }, { dataSources }) => {
+      const newCampaign = dataSources.campaignAPI.addCampaign(
+        campaign.name,
+        campaign.adminID
+      );
+      return newCampaign;
+    },
+    addMedia: (_, { media }, { dataSources }) => {
+      const newMedia = dataSources.campaignAPI.addMedia(media);
+      return {
+        id: 1,
+        name: media.name,
+        type: media.type,
+        url: media.url,
+        views: []
+      };
     }
   }
 };

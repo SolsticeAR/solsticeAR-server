@@ -10,6 +10,42 @@ class CampaignAPI extends DataSource {
   initialize(config) {
     this.context = config.context;
   }
+  async addCampaign(name, adminId) {
+    if (name && name.trim() === "")
+      throw new UserInputError("Name was not supplied.");
+
+    const insert = await db["campaign"].create({
+      name,
+      admin_id: adminId,
+      active: true
+    });
+
+    return {
+      id: insert.id,
+      name: insert.name,
+      active: insert.active,
+      activeCreativeId: insert.active_creative_id,
+      media: []
+    };
+  }
+
+  async addMedia({ name, type, url }) {
+    if (name && name.trim() === "")
+      throw new UserInputError("Name was not supplied.");
+
+    const insert = await db["creative"].create({
+      name,
+      type,
+      url
+    });
+    return {
+      id: insert.id,
+      type: insert.type,
+      name: insert.name,
+      url: insert.url,
+      views: []
+    };
+  }
 
   async getAdminCampaigns(adminId) {
     if (!adminId) throw new UserInputError("AdminID was not provided.");
