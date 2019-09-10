@@ -65,6 +65,7 @@ const typeDefs = gql(`
       test(campaignID: Int): Int
       addCampaign(campaign:NewCampaignInput):Campaign
       addMedia(media:NewMediaInput): Media
+      setActiveMedia(campaignID: Int, mediaID: Int): Boolean
     }
 `);
 
