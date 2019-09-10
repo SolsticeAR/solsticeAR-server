@@ -40,4 +40,10 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+db["creative"].hasMany(db["view"], { foreignKey: "creative_id" });
+db["view"].belongsTo(db["creative"], { foreignKey: "creative_id" });
+
+db["campaign"].hasMany(db["creative"], { foreignKey: "campaign_id" });
+db["creative"].belongsTo(db["campaign"], { foreignKey: "campaign_id" });
+
 module.exports = db;

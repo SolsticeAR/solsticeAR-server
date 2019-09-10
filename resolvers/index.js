@@ -17,7 +17,11 @@ const resolvers = {
       return data ? new Admin(data) : null;
     },
     getAdminCampaigns: async (_, { adminID }, { dataSources }) => {
-      return mockCampaignData;
+      const campaigns = await dataSources.campaignAPI.getAdminCampaigns(
+        adminID
+      );
+      console.log(campaigns);
+      return campaigns;
     }
   },
   Mutation: {
@@ -34,6 +38,17 @@ const resolvers = {
     },
     test: (_, { campaignID }, { dataSources }) => {
       dataSources.adminAPI.test();
+    },
+    addCampaign: (_, { campaign }, { dataSources }) => {
+      const newCampaign = dataSources.campaignAPI.addCampaign(
+        campaign.name,
+        campaign.adminID
+      );
+      return newCampaign;
+    },
+    addMedia: (_, { media }, { dataSources }) => {
+      const newMedia = dataSources.campaignAPI.addMedia(media);
+      return newMedia;
     }
   }
 };

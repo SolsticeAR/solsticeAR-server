@@ -9,16 +9,18 @@ const typeDefs = gql(`
     }
 
     type Campaign {
-      id: Int
-      name: String
+      id: Int!
+      name: String!
+      active: Boolean!
+      activeCreativeId: Int
       media: [Media]
     }
 
     type Media {
-      id: Int
-      type: String
-      name: String
-      url: String
+      id: Int!
+      type: String!
+      name: String!
+      url: String!
       views: [View]
     }
 
@@ -32,8 +34,21 @@ const typeDefs = gql(`
       email: String!
       password: String!
       industry: String
-
     }
+
+    input NewCampaignInput {
+      name: String
+      adminID : Int
+    }
+
+    input NewMediaInput {
+      name: String!
+      url: String!
+      type: String!
+      campaignID: Int!
+    }
+
+
     type Query {
       getAdmin(email: String!): Admin
       getAdminCampaigns(adminID: Int): [Campaign]
@@ -48,6 +63,8 @@ const typeDefs = gql(`
       register(adminData: NewAdminInput): Admin
       login(email: String, password: String): LoginResponse
       test(campaignID: Int): Int
+      addCampaign(campaign:NewCampaignInput):Campaign
+      addMedia(media:NewMediaInput): Media
     }
 `);
 
