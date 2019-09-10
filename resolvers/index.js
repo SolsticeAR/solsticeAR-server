@@ -49,6 +49,14 @@ const resolvers = {
     addMedia: (_, { media }, { dataSources }) => {
       const newMedia = dataSources.campaignAPI.addMedia(media);
       return newMedia;
+    },
+    setActiveMedia: (_, { campaignID, mediaID }, { dataSources }) => {
+      const result = dataSources.campaignAPI.setActiveMedia(
+        campaignID,
+        mediaID
+      );
+
+      return result;
     }
   }
 };

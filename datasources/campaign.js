@@ -29,6 +29,24 @@ class CampaignAPI extends DataSource {
     };
   }
 
+  async setActiveMedia(campaignId, mediaId) {
+    if (!campaignId || !mediaId)
+      throw UserInputError("Please provide campaignID and mediaID");
+
+    const update = await db["campaign"].update(
+      {
+        active_creative_id: mediaId
+      },
+      {
+        where: {
+          id: campaignId
+        }
+      }
+    );
+
+    return update ? true : false;
+  }
+
   async addMedia({ name, type, url, campaignID }) {
     if (name && name.trim() === "")
       throw new UserInputError("Name was not supplied.");
