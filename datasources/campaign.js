@@ -135,7 +135,7 @@ class CampaignAPI extends DataSource {
       serializeCampaign.name = campaign.name;
       serializeCampaign.adminId = campaign.admin_id;
       serializeCampaign.active = campaign.active;
-      serializeCampaign.active_creative_id = campaign.active_creative_id;
+      serializeCampaign.activeCreativeId = campaign.active_creative_id;
       serializeCampaign.createdAt = campaign.createdAt;
       serializeCampaign.updatedAt = campaign.updatedAt;
       if (!campaign.creatives) {
