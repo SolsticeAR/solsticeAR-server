@@ -30,7 +30,23 @@ class AdminAPI extends DataSource {
     });
     return admin;
   }
+
+  validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+
+  validatePassword(str) {
+    return str && typeof str === "string" && str.trim().length > 5;
+  }
+
   async createAdmin({ name, password, email, industry = null }) {
+    if (!this.validateEmail(email) || !this.validatePassword(password)) {
+      throw new UserInputError(
+        "User input error. Account info is invalid."
+      );
+    }
+
     const hashedPassword = await bcrypt.hash(password, 8);
     try {
       const admin = await db["admin"].create({
@@ -48,6 +64,16 @@ class AdminAPI extends DataSource {
   }
 
   async login(email, password) {
+    if (!this.validateEmail(email)) {
+      throw new UserInputError(
+        "User input error. Email format is invalid."
+      );
+    } else if (!this.validatePassword(password)) {
+      throw new UserInputError(
+        "User input error. Password format is invalid."
+      );
+    }
+
     const admin = await this.findAdminByEmail(email);
     const passwordMatch = await bcrypt.compare(password, admin.password);
 

@@ -5,6 +5,7 @@ const resolvers = require("./resolvers");
 const typeDefs = require("./typedefs");
 const jwt = require("jsonwebtoken");
 const mustache = require("mustache-express");
+const { getImage } = require("./utils")
 
 /**
  * Static jwt authentication function
@@ -55,7 +56,8 @@ app.get("/campaign/:campaignID", async (req, res) => {
         console.log(
           "Attempting to render image template, with img url: " + media.url
         );
-        res.render("image.html", { imageUrl: media.url });
+        const img = await getImage(media.url);
+        res.render("image.html", { imageUrl: img });
         break;
       default:
         renderError(res, "Media type is not handled yet: ", media.type);
