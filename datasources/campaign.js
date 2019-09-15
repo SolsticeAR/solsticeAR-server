@@ -2,6 +2,37 @@ const { DataSource } = require("apollo-datasource");
 const { AuthenticationError, UserInputError } = require("apollo-server");
 const db = require("../models");
 
+class Campaign {
+  constructor(campainData) {
+    this.id = campainData.id;
+    this.name = campainData.name;
+    this.adminId = campainData.admin_id;
+    this.active = campainData.active;
+    this.activeCreativeId = campainData.active_creative_id;
+    this.createdAt = campainData.createdAt;
+    this.updatedAt = campainData.updatedAt;
+    if (!campainData.creatives) {
+      this.media = [];
+    } else {
+      this.media = campainData.creatives.map(creative => {
+        const serializeCreative = {};
+        if (!creative.views) {
+          serializeCreative.views = [];
+        } else {
+          serializeCreative.views = creative.views.map(view => {
+            return { views: view.view_count, date: view.createdAt.getTime() };
+          });
+        }
+        serializeCreative.id = creative.id;
+        serializeCreative.name = creative.name;
+        serializeCreative.type = creative.type;
+        serializeCreative.url = creative.url;
+        return serializeCreative;
+      });
+    }
+  }
+}
+
 class CampaignAPI extends DataSource {
   constructor() {
     super();
@@ -62,7 +93,7 @@ class CampaignAPI extends DataSource {
     return update ? true : false;
   }
 
-  async addMedia({ name, type, url, campaignID }) {
+  async addMedia({ name, type, url, campaignId }) {
     if (name && name.trim() === "")
       throw new UserInputError("Name was not supplied.");
 
@@ -70,7 +101,7 @@ class CampaignAPI extends DataSource {
       name,
       type,
       url,
-      campaign_id: campaignID
+      campaign_id: campaignId
     });
     return {
       id: insert.id,
@@ -111,12 +142,31 @@ class CampaignAPI extends DataSource {
     return activeMediaId;
   }
 
+  async getCampaigns() {
+    if (!this.context)
+      throw new AuthenticationError("Please log in to your account");
+    const campaigns = await db["campaign"].findAll({
+      include: [
+        {
+          model: db["creative"],
+          include: [db["view"]]
+        }
+      ]
+    });
+    const results = campaigns.map(campaign => new Campaign(campaign));
+
+    results.map(campaign =>
+      campaign.media.map(creative => console.log(creative))
+    );
+
+    return results;
+  }
+
   async getAdminCampaigns(adminId) {
     if (!adminId) throw new UserInputError("AdminID was not provided.");
 
     if (!this.context)
       throw new AuthenticationError("Please log in to your account");
-
     const campaigns = await db["campaign"].findAll({
       where: {
         admin_id: adminId
@@ -129,36 +179,7 @@ class CampaignAPI extends DataSource {
       ]
     });
 
-    const results = campaigns.map(campaign => {
-      const serializeCampaign = {};
-      serializeCampaign.id = campaign.id;
-      serializeCampaign.name = campaign.name;
-      serializeCampaign.adminId = campaign.admin_id;
-      serializeCampaign.active = campaign.active;
-      serializeCampaign.activeCreativeId = campaign.active_creative_id;
-      serializeCampaign.createdAt = campaign.createdAt;
-      serializeCampaign.updatedAt = campaign.updatedAt;
-      if (!campaign.creatives) {
-        serializeCampaign.media = [];
-      } else {
-        serializeCampaign.media = campaign.creatives.map(creative => {
-          const serializeCreative = {};
-          if (!creative.views) {
-            serializeCreative.views = [];
-          } else {
-            serializeCreative.views = creative.views.map(view => {
-              return { views: view.view_count, date: view.createdAt.getTime() };
-            });
-          }
-          serializeCreative.id = creative.id;
-          serializeCreative.name = creative.name;
-          serializeCreative.type = creative.type;
-          serializeCreative.url = creative.url;
-          return serializeCreative;
-        });
-      }
-      return serializeCampaign;
-    });
+    const results = campaigns.map(campaign => new Campaign(campaign));
 
     results.map(campaign =>
       campaign.media.map(creative => console.log(creative))

@@ -22,6 +22,11 @@ const resolvers = {
       );
       console.log(campaigns);
       return campaigns;
+    },
+    getCampaigns: async (_, {}, { dataSources }) => {
+      const campaigns = await dataSources.campaignAPI.getCampaigns();
+      console.log(campaigns);
+      return campaigns;
     }
   },
   Mutation: {
