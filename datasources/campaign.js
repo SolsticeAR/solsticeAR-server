@@ -155,10 +155,6 @@ class CampaignAPI extends DataSource {
     });
     const results = campaigns.map(campaign => new Campaign(campaign));
 
-    results.map(campaign =>
-      campaign.media.map(creative => console.log(creative))
-    );
-
     return results;
   }
 
@@ -180,11 +176,6 @@ class CampaignAPI extends DataSource {
     });
 
     const results = campaigns.map(campaign => new Campaign(campaign));
-
-    results.map(campaign =>
-      campaign.media.map(creative => console.log(creative))
-    );
-
     return results;
   }
 }
