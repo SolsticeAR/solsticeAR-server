@@ -5,7 +5,7 @@ const resolvers = require("./resolvers");
 const typeDefs = require("./typedefs");
 const jwt = require("jsonwebtoken");
 const mustache = require("mustache-express");
-const { getImage } = require("./utils")
+const { getImage } = require("./utils");
 
 /**
  * Static jwt authentication function
@@ -41,6 +41,14 @@ server.applyMiddleware({ app, path: "/api" });
 const renderError = (res, msg) => {
   res.render("error.html", { msg });
 };
+
+app.get("/mobilecampaign/:campaignID", async (req, res) => {
+  const activeMediaId = await campaignAPI.createOrIncrementViews(
+    req.params.campaignID
+  );
+  const media = await campaignAPI.getMediaById(activeMediaId);
+  res.send(JSON.stringify(media));
+});
 
 app.get("/campaign/:campaignID", async (req, res) => {
   const activeMediaId = await campaignAPI.createOrIncrementViews(
