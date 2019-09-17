@@ -42,9 +42,7 @@ class AdminAPI extends DataSource {
 
   async createAdmin({ name, password, email, industry = null }) {
     if (!this.validateEmail(email) || !this.validatePassword(password)) {
-      throw new UserInputError(
-        "User input error. Account info is invalid."
-      );
+      throw new UserInputError("User input error. Account info is invalid.");
     }
 
     const hashedPassword = await bcrypt.hash(password, 8);
@@ -65,13 +63,9 @@ class AdminAPI extends DataSource {
 
   async login(email, password) {
     if (!this.validateEmail(email)) {
-      throw new UserInputError(
-        "User input error. Email format is invalid."
-      );
+      throw new UserInputError("User input error. Email format is invalid.");
     } else if (!this.validatePassword(password)) {
-      throw new UserInputError(
-        "User input error. Password format is invalid."
-      );
+      throw new UserInputError("User input error. Password format is invalid.");
     }
 
     const admin = await this.findAdminByEmail(email);
