@@ -20,7 +20,10 @@ const resolvers = {
       const campaigns = await dataSources.campaignAPI.getAdminCampaigns(
         adminID
       );
-      console.log(campaigns);
+      return campaigns;
+    },
+    getCampaigns: async (_, { }, { dataSources }) => {
+      const campaigns = await dataSources.campaignAPI.getCampaigns();
       return campaigns;
     }
   },
