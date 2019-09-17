@@ -3,18 +3,18 @@ const { AuthenticationError, UserInputError } = require("apollo-server");
 const db = require("../models");
 
 class Campaign {
-  constructor(campainData) {
-    this.id = campainData.id;
-    this.name = campainData.name;
-    this.adminId = campainData.admin_id;
-    this.active = campainData.active;
-    this.activeCreativeId = campainData.active_creative_id;
-    this.createdAt = campainData.createdAt;
-    this.updatedAt = campainData.updatedAt;
-    if (!campainData.creatives) {
+  constructor(campaignData) {
+    this.id = campaignData.id;
+    this.name = campaignData.name;
+    this.adminId = campaignData.admin_id;
+    this.active = campaignData.active;
+    this.activeCreativeId = campaignData.active_creative_id;
+    this.createdAt = campaignData.createdAt;
+    this.updatedAt = campaignData.updatedAt;
+    if (!campaignData.creatives) {
       this.media = [];
     } else {
-      this.media = campainData.creatives.map(creative => {
+      this.media = campaignData.creatives.map(creative => {
         const serializeCreative = {};
         if (!creative.views) {
           serializeCreative.views = [];
