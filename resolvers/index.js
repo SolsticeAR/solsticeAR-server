@@ -22,7 +22,13 @@ const resolvers = {
       );
       return campaigns;
     },
-    getCampaigns: async (_, { }, { dataSources }) => {
+    getActiveMediaCampaign: async (_, { campaignId }, { dataSources }) => {
+      const campaigns = await dataSources.campaignAPI.getActiveMediaCampaign(
+        campaignId
+      );
+      return campaigns;
+    },
+    getCampaigns: async (_, {}, { dataSources }) => {
       const campaigns = await dataSources.campaignAPI.getCampaigns();
       return campaigns;
     }

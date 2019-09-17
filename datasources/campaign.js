@@ -1,6 +1,7 @@
 const { DataSource } = require("apollo-datasource");
 const { AuthenticationError, UserInputError } = require("apollo-server");
 const db = require("../models");
+const sequelize = require("sequelize");
 
 class Campaign {
   constructor(campaignData) {
@@ -166,6 +167,36 @@ class CampaignAPI extends DataSource {
     const campaigns = await db["campaign"].findAll({
       where: {
         admin_id: adminId
+      },
+      include: [
+        {
+          model: db["creative"],
+          include: [db["view"]]
+        }
+      ]
+    });
+
+    const results = campaigns.map(campaign => new Campaign(campaign));
+    return results;
+  }
+
+  //new
+  async getActiveMediaCampaign(campaignId) {
+    if (!campaignId) throw new UserInputError("CampaignID was not provided.");
+
+    if (!this.context)
+      throw new AuthenticationError("Please log in to your account");
+
+    const activeCreativeId = await db["campaign"].findAll({
+      where: {
+        id: campaignId
+      }
+    });
+
+    const campaigns = await db["campaign"].findAll({
+      where: {
+        "$campaign.id$": campaignId,
+        "$creatives.id$": activeCreativeId
       },
       include: [
         {
