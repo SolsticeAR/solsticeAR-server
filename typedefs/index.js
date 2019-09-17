@@ -52,6 +52,7 @@ const typeDefs = gql(`
     type Query {
       getAdmin(email: String!): Admin
       getAdminCampaigns(adminID: Int): [Campaign]
+      getCampaigns:[Campaign]
     }
 
     type LoginResponse {
