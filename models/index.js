@@ -6,7 +6,7 @@ const path = require("path");
 const Sequelize = require("sequelize");
 const basename = path.basename(__filename);
 // const env = process.env.NODE_ENV || "development";
-const env = "production";
+const env = process.env.DATABASE_URL ? "production" : "development";
 const config = require(__dirname + "/../config/config.js")[env];
 const db = {};
 
@@ -14,15 +14,7 @@ let sequelize;
 // if (config.use_env_variable) {
 //   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 if (process.env.DATABASE_URL) {
-  sequelize = new Sequelize(
-    process.env.DB,
-    process.env.USER_NAME,
-    process.env.PW,
-    {
-      host: process.env.HOST,
-      dialect: "postgres"
-    }
-  );
+  sequelize = new Sequelize(process.env.DATABASE_URL);
 } else {
   sequelize = new Sequelize(
     config.database,
