@@ -55,7 +55,6 @@ class AdminAPI extends DataSource {
       });
       return admin;
     } catch (err) {
-      console.log(err);
       throw new UserInputError(
         "User input error. Please make sure your data is setup properly."
       );
