@@ -22,6 +22,7 @@ const typeDefs = gql(`
       name: String!
       url: String!
       views: [View]
+      totalViews: Int!
     }
 
     type View {
