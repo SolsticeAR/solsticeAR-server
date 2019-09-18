@@ -96,15 +96,16 @@ class CampaignAPI extends DataSource {
     return update ? true : false;
   }
 
-  async addMedia({ name, type, url, campaignId }) {
+  async addMedia({ name, type, url, campaignID }) {
+
     if (name && name.trim() === "")
       throw new UserInputError("Name was not supplied.");
-
+    
     const insert = await db["creative"].create({
       name,
       type,
       url,
-      campaign_id: campaignId
+      campaign_id: campaignID
     });
     return {
       id: insert.id,
