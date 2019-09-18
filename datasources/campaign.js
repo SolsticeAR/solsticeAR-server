@@ -95,7 +95,6 @@ class CampaignAPI extends DataSource {
 
   async addMedia({ name, type, url, campaignID }) {
 
-    console.log("SERVER ADD MEDIA:", name, type, url, campaignID);
     if (name && name.trim() === "")
       throw new UserInputError("Name was not supplied.");
     
