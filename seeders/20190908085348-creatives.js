@@ -66,6 +66,39 @@ module.exports = {
         campaign_id: 4,
         createdAt: new Date(),
         updatedAt: new Date()
+      },
+      {
+        name: "Llama with an opinion",
+        type: "image",
+        url:
+          "http://vrmockforjill.nfshost.com/images/llama_with_an_opinion.jpg",
+        campaign_id: 5,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: "Video - MP4",
+        type: "video",
+        url: "http://vrmockforjill.nfshost.com/images/sample_mp4.mp4",
+        campaign_id: 6,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: "Dancing Llama",
+        type: "animatedImage",
+        url: "http://vrmockforjill.nfshost.com/images/llama.gif",
+        campaign_id: 7,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: "Hola Mundo",
+        type: "text",
+        url: "",
+        campaign_id: 8,
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ]);
   },

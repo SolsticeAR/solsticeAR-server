@@ -22,6 +22,12 @@ module.exports = {
         password: "password",
         email: "jules@test.com",
         industry: "BAUSS"
+      }),
+      adminAPI.createAdmin({
+        name: "Demo",
+        password: "password",
+        email: "solstice@demo.com",
+        industry: "DEMO"
       })
     ]);
   },

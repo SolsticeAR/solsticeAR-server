@@ -43,10 +43,7 @@ const renderError = (res, msg) => {
 };
 
 app.get("/mobilecampaign/:campaignID", async (req, res) => {
-  const activeMediaId = await campaignAPI.createOrIncrementViews(
-    req.params.campaignID
-  );
-  const media = await campaignAPI.getMediaById(activeMediaId);
+  const media = await campaignAPI.getActiveMediaCampaign(req.params.campaignID);
   res.send(JSON.stringify(media));
 });
 

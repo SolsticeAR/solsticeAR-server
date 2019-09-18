@@ -1,6 +1,7 @@
 const { DataSource } = require("apollo-datasource");
 const { AuthenticationError, UserInputError } = require("apollo-server");
 const db = require("../models");
+const sequelize = require("sequelize");
 
 class Campaign {
   constructor(campaignData) {
@@ -16,10 +17,12 @@ class Campaign {
     } else {
       this.media = campaignData.creatives.map(creative => {
         const serializeCreative = {};
+        serializeCreative.totalViews = 0;
         if (!creative.views) {
           serializeCreative.views = [];
         } else {
           serializeCreative.views = creative.views.map(view => {
+            serializeCreative.totalViews += view.view_count;
             return { views: view.view_count, date: view.createdAt.getTime() };
           });
         }
@@ -166,6 +169,38 @@ class CampaignAPI extends DataSource {
     const campaigns = await db["campaign"].findAll({
       where: {
         admin_id: adminId
+      },
+      include: [
+        {
+          model: db["creative"],
+          include: [db["view"]]
+        }
+      ]
+    });
+    const results = campaigns.map(campaign => new Campaign(campaign));
+    return results;
+  }
+
+  //new
+  async getActiveMediaCampaign(campaignId) {
+    if (!campaignId) throw new UserInputError("CampaignID was not provided.");
+
+    if (!this.context)
+      throw new AuthenticationError("Please log in to your account");
+
+    const activeCreativeId = await db["campaign"].findOne({
+      attributes: ["active_creative_id"],
+      where: {
+        id: campaignId
+      }
+    });
+
+    //console.log("this is active creative id:", activeCreativeId);
+
+    const campaigns = await db["campaign"].findAll({
+      where: {
+        "$campaign.id$": campaignId,
+        "$creatives.id$": activeCreativeId.active_creative_id
       },
       include: [
         {

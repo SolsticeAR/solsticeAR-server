@@ -30,6 +30,34 @@ module.exports = {
         active: true,
         createdAt: new Date(),
         updatedAt: new Date()
+      },
+      {
+        name: "DEMO IMAGE",
+        admin_id: 4,
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: "DEMO VIDEO",
+        admin_id: 4,
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: "DEMO GIF",
+        admin_id: 4,
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: "DEMO TEXT",
+        admin_id: 4,
+        active: true,
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ]);
   },
