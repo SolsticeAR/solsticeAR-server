@@ -24,7 +24,7 @@ const resolvers = {
     },
     getActiveMediaCampaign: async (_, { campaignId }, { dataSources }) => {
       await dataSources.campaignAPI.createOrIncrementViews(
-        campaignID
+        campaignId
       );
       const campaigns = await dataSources.campaignAPI.getActiveMediaCampaign(
         campaignId
