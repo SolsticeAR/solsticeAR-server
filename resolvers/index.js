@@ -23,12 +23,15 @@ const resolvers = {
       return campaigns;
     },
     getActiveMediaCampaign: async (_, { campaignId }, { dataSources }) => {
+      await dataSources.campaignAPI.createOrIncrementViews(
+        campaignID
+      );
       const campaigns = await dataSources.campaignAPI.getActiveMediaCampaign(
         campaignId
       );
       return campaigns;
     },
-    getCampaigns: async (_, {}, { dataSources }) => {
+    getCampaigns: async (_, { }, { dataSources }) => {
       const campaigns = await dataSources.campaignAPI.getCampaigns();
       return campaigns;
     }
