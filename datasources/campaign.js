@@ -157,7 +157,7 @@ class CampaignAPI extends DataSource {
         }
       ]
     });
-    const results = campaigns.map(campaign => new Campaign(campaign));
+    const results = campaigns.map(campaign => new Campaign(campaign)).filter(campaign => campaign.activeCreativeId);
 
     return results;
   }
