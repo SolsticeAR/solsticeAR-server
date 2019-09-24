@@ -60,8 +60,13 @@ class CampaignAPI extends DataSource {
   }
 
   async addCampaign(name, adminId) {
+    if (name === "null"){
+      let maxid = await db["campaign"].max("id");
+      name = `Experience ${++maxid}`;
+    }
     if (name && name.trim() === "")
       throw new UserInputError("Name was not supplied.");
+
 
     const insert = await db["campaign"].create({
       name,
