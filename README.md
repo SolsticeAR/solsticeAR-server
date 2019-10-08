@@ -1,20 +1,13 @@
-# SolsticeAR - Server
+## About
+SolsticeAR is an open source AR media sharing platform. Please learn more at www.solsticear.com
 
-> Server repo for SolsticeAR, a platform that allows you to create, manage and track Web AR experiences.
+This repo is hosting the source code for the Node.js/GraphQL/PostgreSQL backend. For access to the [landing page](https://github.com/SolsticeAR/solsticeAR-landing-page), the React/Redux web [dashboard](https://github.com/SolsticeAR/solsticeAR-admin-client) or the the React Native [mobile app](https://github.com/SolsticeAR/SolsticeAR-mobile-client) please visit https://github.com/SolsticeAR. 
 
 # Tech Used
 
 - Apollo Server / GraphQL
 - PostgreSQL
 - Sequelize
-
-## Table of Contents
-
-1. [Requirements](#requirements)
-1. [Development](#development)
-1. [Usage](#Usage)
-1. [Team](#team)
-1. [Contributing](#contributing)
 
 ### Requirements
 
@@ -45,19 +38,22 @@ yarn
 Run all migrations:
 
 ```
-npx sequelize-cli db:migrate
+yarn migrate
 ```
+
+To undo migrations you can run `yarn migrate:undo`
 
 And then seed the DB:
 
 ```
-npx sequelize-cli db:seed:all
+yarn seed
 ```
+To undo seeds you can run `yarn seed:undo`
 
 Run the server:
 
 ```
-node index.js
+yarn start
 ```
 
 Open browser at: `http://localhost:4000` to checkout the API's docs.
@@ -69,7 +65,7 @@ Open browser at: `http://localhost:4000` to checkout the API's docs.
 > 1. Send GraphQL query to localhost:4000/
 > 2. Customize the query so that you only get the data you need
 
-### Queries
+### Query examples
 
 - getAdmin(email: String!): Admin
 
@@ -85,7 +81,7 @@ Open browser at: `http://localhost:4000` to checkout the API's docs.
 
 ```
 
-### Mutations
+### Mutation examples
 
 - register(adminData: NewAdmin): Admin
 
